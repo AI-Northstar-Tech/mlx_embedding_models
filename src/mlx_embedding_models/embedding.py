@@ -81,6 +81,15 @@ class EmbeddingModel:
         """
         Initialize from the model registry.
         """
+        if model_name not in registry:
+            # default values
+            return cls(
+                model_path=model_name,
+                pooling_strategy="mean",
+                normalize=True,
+                max_length=512,
+                nomic_bert="nomic" in model_name,
+            )
         model_config = registry[model_name]
         return cls(
             model_path=model_config["repo"],
